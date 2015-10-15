@@ -1,0 +1,23 @@
+*target*
+*.jar
+*.war
+*.ear
+*.class
+.project
+.metadata
+spring-*/src/main/java/META-INF/MANIFEST.MF
+bin/**
+org.springframework.jdbc/derby.log
+org.springframework.spring-parent/.classpath
+org.springframework.spring-parent/.project
+org.springframework.test/test-output/
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
