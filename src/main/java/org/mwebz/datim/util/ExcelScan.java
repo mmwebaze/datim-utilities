@@ -42,7 +42,7 @@ public class ExcelScan {
 	 * For the moment this function only supports scanning of 2 columns only
 	 * @param file this is file name and location in the format C:/development/datim/xsl/car.xlsx for windows
 	 * @param beginAtRow row in Excel sheet from which point you want to start the reading
-	 * @param columns the different columns you want to read
+	 * @param columns the different columns you want to read. Begin with column that has site ids
 	 * @return a HashMap with Key as site id and value as site name 
 	 */
 	public Map<String, String> readMultipleColumns(String file, int beginAtRow, int...columns) {

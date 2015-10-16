@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>****</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h2>README</h2>
+		</div>
+		<div class="row">
+			<h3>REQUIREMENTS</h3>
+			<ul>
+				<li>Java >= 7</li>
+				<li>Maven for building</li>
+			</ul>
+			<h3>BASE URL SETTING</h3>
+			This parameter can be changed from the application.properties file
+			located /DatimUtility/src/main/resources/.
+			<h3>WORKING DIRECTORY</h3>
+			This parameter can be changed from the application.properties file
+			located /DatimUtility/src/main/resources/
+			<h3>USERNAME AND PASSWORD</h3>
+			These parameters can be changed from the application.properties file
+			located /DatimUtility/src/main/resources/
+			<h3>EXCEL SHEET TO SCAN</h3>
+			ExcelScan.java has the functionality that reads excel files with the
+			site ids that need to be updated. In this file 
+
+			<h3>End points</h3>
+			<h4>localhost:8080/ or index or home</h4>
+			This is the home page of this application.
+
+			<h4>localhost:8080/updateOrgUnit</h4>
+			This end point will update site names associated with site ids
+			scanned from an excel sheet.
+			<h4>localhost:8080/test</h4>
+			This end point is for testing your base url and if you are able to
+			connect to it. It will return a list of Org Unit Levels if configs
+			are correct.
+			<h3>+++++++++++++++++++++++++++++++++++++++++++++++++++++</h3>
+			Once the changes have been made, build using mavan and run as a
+			Spring boot application.
+		</div>
+		<div class="row">
+
+
+			<table class="table table-striped">
+				<tbody>
+					<tr>
+						<td colspan="2"><a
+							href="http://localhost:8080/test">Test Configurations</a></td>
+					</tr>
+					<tr>
+						<td colspan="2"><a
+							href="http://localhost:8080/updateOrgUnitForm">Update Org
+								Unit Names</a></td>
+					</tr>
+					<tr>
+						<td>Working directory</td>
+						<td><p th:text="${working_dir}"></p></td>
+					</tr>
+					<tr>
+						<td>Base URL</td>
+						<td><p th:text="${base_url}"></p></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

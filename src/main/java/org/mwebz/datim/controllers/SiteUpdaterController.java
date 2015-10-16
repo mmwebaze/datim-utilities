@@ -2,9 +2,14 @@ package org.mwebz.datim.controllers;
 
 import javax.annotation.Resource;
 
+import org.mwebz.datim.forms.data.ValideOrgUnit;
 import org.mwebz.datim.service.DatimServices;
+import org.mwebz.datim.util.JsonConverter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -12,18 +17,22 @@ public class SiteUpdaterController {
 
 	@Resource
 	private DatimServices datimServices;
-	
-	@RequestMapping(value="/orgunit")
-	public @ResponseBody String getOrgUnit(){
-		datimServices.getSites();
 
-		return "Done";
+	@RequestMapping(value="/test")
+	public String getOrgUnitLevels(Model model){
+		model.addAttribute("levels", JsonConverter.organisationUnitLevels(datimServices.getOrgUnitLevels()).getOrganisationUnitLevels());
+		return "orgLevels";
 	}
-	@RequestMapping(value="/updateOrgUnit")
-	public @ResponseBody String updateOrganisationUnit(){
-		datimServices.updateSite();
-		
-		return "Done";
+	@RequestMapping(value="/updateOrgUnits")
+	public @ResponseBody String updateOrganisationUnit(@ModelAttribute ValideOrgUnit updateOrgUnits, Model model){
+		datimServices.updateSite(updateOrgUnits.getFile(), updateOrgUnits.getBeginAtRowNumber(), updateOrgUnits.getIdColumnNumber(), updateOrgUnits.getNameColumnNumber());
+		return "done updating";
 	}
+
+	/*@RequestMapping(value="/validateOrgUnits", method=RequestMethod.POST)
+	public @ResponseBody String validateOrgUnits(@ModelAttribute ValideOrgUnit validateOrgUnits, Model model){
+
+		return "Under Construction";
+	}*/
 }
 

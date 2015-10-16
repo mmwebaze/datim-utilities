@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>****</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<ul>
+				<li><b>*</b>In Excel, the column and row numbering start from Zero (0)</li>
+			</ul>
+		</div>
+		<div class="row">
+			<form action="#" th:action="@{/updateOrgUnits}" method="post"
+				th:object="${updateOrgUnits}" class="form-horizontal">
+				<div class="form-group">
+					<label for="inputFile" class="control-label col-xs-2">Select
+						file</label>
+					<div class="col-xs-10">
+						<input type="file" id="inputFile" th:field="*{file}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="beginAtRow" class="control-label col-xs-2">Enter
+						row from which to start scan</label>
+					<div class="col-xs-10">
+						<input type="number" id="beginAtRow"
+							th:field="*{beginAtRowNumber}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="idCol" class="control-label col-xs-2">Enter
+						column # with site ids</label>
+					<div class="col-xs-10">
+						<input type="number" id="idCol" th:field="*{idColumnNumber}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nameCol" class="control-label col-xs-2">Enter
+						column # with site names</label>
+					<div class="col-xs-10">
+						<input type="number" id="nameCol" th:field="*{nameColumnNumber}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputFile" class="control-label col-xs-2"></label>
+					<div class="col-xs-10">
+						<button type="submit" class="btn btn-primary">Update</button>
+
+						<button type="reset" class="btn btn-primary">Reset</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

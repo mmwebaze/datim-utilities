@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>****</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	<div id="visits_summary_header" class="page-header">
+			<h4>Organisation Unit Levels</h4>
+		</div>
+		<div>
+			<table class="table table-striped" id="orgLevels">
+				<thead>
+					<tr>
+						<th></th>
+						<th>id</th>
+						<th>Level Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="level,status  : ${levels}">
+						<td th:text="${status.count}"></td>
+						<td th:text="${level.id}"></td>
+						<td th:text="${level.name}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

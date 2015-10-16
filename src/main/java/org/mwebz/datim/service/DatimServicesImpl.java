@@ -7,8 +7,8 @@ import javax.annotation.Resource;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.mwebz.datim.configuration.DatimUtilityConfiguration;
 import org.mwebz.datim.test.DataObject;
-import org.mwebz.datim.util.DatimUtilityConstants;
 import org.mwebz.datim.util.ExcelScan;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,38 +24,48 @@ public class DatimServicesImpl implements DatimServices{
 	@Resource
 	private ExcelScan excelReading;
 	@Resource
+	DatimUtilityConfiguration datimUtilityConfiguration;
+	@Resource
 	private LoginService datimLoginService;
 	@Override
-	public void getSites() {
-		//ConvertCSV.xslCsv();
-		HttpEntity<String> request = new HttpEntity<String>(datimLoginService.login("span", "spin"));
+	public void getSites(String file) {
+		HttpEntity<String> request = new HttpEntity<String>(datimLoginService.login(datimUtilityConfiguration.getUsername(), datimUtilityConfiguration.getPassword()));
 		RestTemplate restTemplate = new RestTemplate();
 
-		List<String> idList = excelReading.readSingleColumn("C:/development/datim/xsl/car.xlsx", 7, 1);
+		List<String> idList = excelReading.readSingleColumn(datimUtilityConfiguration.getWorkingFolder()+file, 7, 1);
 		int startAtRow = 7;
 		for(String id : idList){
 
-			ResponseEntity<String> response = restTemplate.exchange(DatimUtilityConstants.BASE_URL+"organisationUnits/"+id+".json", HttpMethod.GET, request, String.class);
+			ResponseEntity<String> response = restTemplate.exchange(datimUtilityConfiguration.getBaseUrl()+"organisationUnits/"+id+".json", HttpMethod.GET, request, String.class);
 			startAtRow++;
 		}
 	}
 
 	@Override
-	public void updateSite() {
-		HttpHeaders headers = datimLoginService.login("admin", "district");
+	public void updateSite(String file, int beginAtRow, int...columns) {
+		HttpHeaders headers = datimLoginService.login(datimUtilityConfiguration.getUsername(), datimUtilityConfiguration.getPassword());
 		headers.add("Content-Type", "application/json");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpClient httpClient = HttpClients.createDefault();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient));
 
-		Map<String, String> idNameMap = excelReading.readMultipleColumns("C:/development/datim/xsl/Nigeria.xls", 1, 0, 2);
+		Map<String, String> idNameMap = excelReading.readMultipleColumns(datimUtilityConfiguration.getWorkingFolder()+file, beginAtRow, columns[0], columns[1]);
 		for (Map.Entry<String, String> uid : idNameMap.entrySet()){
 			DataObject obj = new DataObject();
 			obj.setName(uid.getValue());
 			HttpEntity<?> request = new HttpEntity<DataObject>(obj, headers);
-			restTemplate.put(DatimUtilityConstants.TEST_URL+"organisationUnits/"+uid.getKey()+"/name", request,  String.class);
+			restTemplate.put(datimUtilityConfiguration.getBaseUrl()+"organisationUnits/"+uid.getKey()+"/name", request,  String.class);
 		}
 
+	}
+
+	@Override
+	public String getOrgUnitLevels() {
+		HttpEntity<String> request = new HttpEntity<String>(datimLoginService.login(datimUtilityConfiguration.getUsername(), datimUtilityConfiguration.getPassword()));
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.exchange(datimUtilityConfiguration.getBaseUrl()+"organisationUnitLevels.json", HttpMethod.GET, request, String.class);
+		
+		return response.getBody();
 	}
 
 }
