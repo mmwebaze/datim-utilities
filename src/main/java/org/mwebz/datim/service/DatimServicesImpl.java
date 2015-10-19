@@ -74,13 +74,10 @@ public class DatimServicesImpl implements DatimServices{
 				obj2.setId(uid.getValue());
 				obj.setParent(obj2);
 			}
-			System.out.println(JsonConverter.createJson(obj));
+			//System.out.println(JsonConverter.createJson(obj));
 			HttpEntity<?> request = new HttpEntity<OrganisationUnit>(obj, headers);
-			//restTemplate.put(datimUtilityConfiguration.getBaseUrl()+"organisationUnits/"+uid.getKey()+"/name", request,  String.class);
 			restTemplate.put(datimUtilityConfiguration.getBaseUrl()+"organisationUnits/"+uid.getKey()+builder.toString(), request,  String.class);
-			
 		}
-
 	}
 
 	@Override
