@@ -1,8 +1,17 @@
 package org.mwebz.datim.forms.data;
 
-public class ValideOrgUnit {
+public class UpdateOrgUnit {
 	
 	private String file;
+	private int updateReason;
+	public int getUpdateReason() {
+		return updateReason;
+	}
+
+	public void setUpdateReason(int updateReason) {
+		this.updateReason = updateReason;
+	}
+
 	private int beginAtRowNumber;
 	public int getBeginAtRowNumber() {
 		return beginAtRowNumber;

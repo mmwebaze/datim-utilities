@@ -22,11 +22,11 @@ public class JsonConverter {
 		
 		return orgUnitLevels;
 	}
-	public static String createJson(){
+	public static String createJson(OrganisationUnit obj){
 		
 		Gson gson = new Gson();
-		DataObject obj = new DataObject();
-		obj.setName("Aba North");
+		/*DataObject obj = new DataObject();
+		obj.setName("Aba North");*/
 		
 		return gson.toJson(obj);
 	}

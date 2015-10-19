@@ -1,6 +1,6 @@
 package org.mwebz.datim.controllers;
 
-import org.mwebz.datim.forms.data.ValideOrgUnit;
+import org.mwebz.datim.forms.data.UpdateOrgUnit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ public class FormController {
 	}
 	@RequestMapping(value="/updateOrgUnitForm")
 	public String updateOrganisationUnitForm(Model model){
-		model.addAttribute("updateOrgUnits", new ValideOrgUnit());
+		model.addAttribute("updateOrgUnits", new UpdateOrgUnit());
 		return "updateOrgUnits";
 	}
 }

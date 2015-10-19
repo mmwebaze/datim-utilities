@@ -93,7 +93,7 @@ public class OrganisationUnit
     // Transient fields
     // -------------------------------------------------------------------------
 
-    private Set<OrganisationUnit> children = new HashSet<>();
+    //private Set<OrganisationUnit> children = new HashSet<>();
 
     private transient boolean currentParent;
 
@@ -117,7 +117,7 @@ public class OrganisationUnit
 
     public OrganisationUnit()
     {
-        this.uuid = UUID.randomUUID().toString();
+        //this.uuid = UUID.randomUUID().toString();
      //   setAutoFields();
     }
 
@@ -167,7 +167,7 @@ public class OrganisationUnit
         this.comment = comment;
     }
     
-    public Set<OrganisationUnit> getGrandChildren()
+    /*public Set<OrganisationUnit> getGrandChildren()
     {
         Set<OrganisationUnit> grandChildren = new HashSet<>();
 
@@ -178,9 +178,9 @@ public class OrganisationUnit
 
         return grandChildren;
     }
+*/
 
-
-    public boolean hasChild()
+    /*public boolean hasChild()
     {
         return !this.children.isEmpty();
     }
@@ -201,7 +201,7 @@ public class OrganisationUnit
         }
 
         return false;
-    }
+    }*/
 
     public boolean isDescendant( OrganisationUnit ancestor )
     {
@@ -247,7 +247,7 @@ public class OrganisationUnit
         return false;
     }
 
-    public boolean hasCoordinatesUp()
+    /*public boolean hasCoordinatesUp()
     {
         if ( parent != null )
         {
@@ -258,7 +258,7 @@ public class OrganisationUnit
         }
 
         return false;
-    }
+    }*/
 
     public boolean hasCoordinates()
     {
@@ -319,7 +319,7 @@ public class OrganisationUnit
         return units;
     }
 
-    public void updateParent( OrganisationUnit newParent )
+    /*public void updateParent( OrganisationUnit newParent )
     {
         if ( this.parent != null && this.parent.getChildren() != null )
         {
@@ -330,8 +330,8 @@ public class OrganisationUnit
 
         newParent.getChildren().add( this );
     }
-
-    public Set<OrganisationUnit> getChildrenThisIfEmpty()
+*/
+    /*public Set<OrganisationUnit> getChildrenThisIfEmpty()
     {
         Set<OrganisationUnit> set = new HashSet<>();
 
@@ -345,7 +345,7 @@ public class OrganisationUnit
         }
 
         return set;
-    }
+    }*/
 
     public int getOrganisationUnitLevel()
     {
@@ -404,7 +404,7 @@ public class OrganisationUnit
     }
 
 
-    public Set<OrganisationUnit> getChildren()
+   /* public Set<OrganisationUnit> getChildren()
     {
         return children;
     }
@@ -412,7 +412,7 @@ public class OrganisationUnit
     public void setChildren( Set<OrganisationUnit> children )
     {
         this.children = children;
-    }
+    }*/
 
     public String getComment()
     {
@@ -589,7 +589,7 @@ public class OrganisationUnit
 				+ ", coordinates=" + coordinates + ", url=" + url
 				+ ", contactPerson=" + contactPerson + ", address=" + address
 				+ ", email=" + email + ", phoneNumber=" + phoneNumber
-				+ ", children=" + children + ", shortName=" + shortName
+				+ ", shortName=" + shortName
 				+ ", code=" + code + ", name=" + name + "]";
 	}
 

@@ -8,8 +8,10 @@ import javax.annotation.Resource;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.mwebz.datim.configuration.DatimUtilityConfiguration;
+import org.mwebz.datim.domain.OrganisationUnit;
 import org.mwebz.datim.test.DataObject;
 import org.mwebz.datim.util.ExcelScan;
+import org.mwebz.datim.util.JsonConverter;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -42,19 +44,41 @@ public class DatimServicesImpl implements DatimServices{
 	}
 
 	@Override
-	public void updateSite(String file, int beginAtRow, int...columns) {
+	public void updateSite(String file, int updateReason, int beginAtRow, int...columns) {
 		HttpHeaders headers = datimLoginService.login(datimUtilityConfiguration.getUsername(), datimUtilityConfiguration.getPassword());
 		headers.add("Content-Type", "application/json");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpClient httpClient = HttpClients.createDefault();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient));
 
+		StringBuilder builder = new StringBuilder();
+		
+		switch(updateReason){
+		case 1:
+			builder.append("/name");
+			break;
+		case 2:
+			builder.append("/");
+			break;
+		default:
+			break;
+		}
+
 		Map<String, String> idNameMap = excelReading.readMultipleColumns(datimUtilityConfiguration.getWorkingFolder()+file, beginAtRow, columns[0], columns[1]);
 		for (Map.Entry<String, String> uid : idNameMap.entrySet()){
-			DataObject obj = new DataObject();
-			obj.setName(uid.getValue());
-			HttpEntity<?> request = new HttpEntity<DataObject>(obj, headers);
-			restTemplate.put(datimUtilityConfiguration.getBaseUrl()+"organisationUnits/"+uid.getKey()+"/name", request,  String.class);
+			OrganisationUnit obj = new OrganisationUnit();
+			if (updateReason == 1)
+				obj.setName(uid.getValue());
+			if (updateReason == 2){
+				OrganisationUnit obj2 = new OrganisationUnit();
+				obj2.setId(uid.getValue());
+				obj.setParent(obj2);
+			}
+			System.out.println(JsonConverter.createJson(obj));
+			HttpEntity<?> request = new HttpEntity<OrganisationUnit>(obj, headers);
+			//restTemplate.put(datimUtilityConfiguration.getBaseUrl()+"organisationUnits/"+uid.getKey()+"/name", request,  String.class);
+			restTemplate.put(datimUtilityConfiguration.getBaseUrl()+"organisationUnits/"+uid.getKey()+builder.toString(), request,  String.class);
+			
 		}
 
 	}
@@ -64,7 +88,7 @@ public class DatimServicesImpl implements DatimServices{
 		HttpEntity<String> request = new HttpEntity<String>(datimLoginService.login(datimUtilityConfiguration.getUsername(), datimUtilityConfiguration.getPassword()));
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.exchange(datimUtilityConfiguration.getBaseUrl()+"organisationUnitLevels.json", HttpMethod.GET, request, String.class);
-		
+
 		return response.getBody();
 	}
 
